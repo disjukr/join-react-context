@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "outDir": "dist",
+        "declaration": true,
+        "lib": [
+            "dom",
+            "es6"
+        ],
+        "jsx": "react",
+        "rootDir": "src",
+        "strict": true,
+        "noUnusedLocals": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

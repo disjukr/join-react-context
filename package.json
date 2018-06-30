@@ -1,0 +1,33 @@
+{
+  "name": "join-react-context",
+  "version": "0.0.0",
+  "description": "join react context",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf ./dist && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/disjukr/join-react-context.git"
+  },
+  "keywords": [
+    "react",
+    "context",
+    "join"
+  ],
+  "author": "JongChan Choi <jong@chan.moe>",
+  "license": "Zlib",
+  "bugs": {
+    "url": "https://github.com/disjukr/join-react-context/issues"
+  },
+  "homepage": "https://github.com/disjukr/join-react-context#readme",
+  "peerDependencies": {
+    "react": "^16.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.4.6",
+    "rimraf": "^2.6.2",
+    "typescript": "^2.9.2"
+  }
+}
