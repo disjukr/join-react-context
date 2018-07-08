@@ -1,6 +1,6 @@
 {
   "name": "join-react-context",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "join react context",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
