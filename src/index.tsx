@@ -27,7 +27,12 @@ export function joinConsumer<T extends React.Context<any>[]>(contexts: T): React
     };
 }
 
-export type ContextValue<T> = T extends React.Context<infer V> ? V : any;
+export type ContextValue<T> =
+    T extends React.Context<infer V> ? V :
+    T extends React.Provider<infer V> ? V :
+    T extends React.Consumer<infer V> ? V :
+    any;
+
 export type ContextValues<T> =
     T extends [infer A] ? [ContextValue<A>] :
     T extends [infer A, infer B] ? [ContextValue<A>, ContextValue<B>] :
