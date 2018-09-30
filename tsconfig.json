@@ -6,7 +6,7 @@
         "declaration": true,
         "lib": [
             "dom",
-            "es6"
+            "es2018"
         ],
         "jsx": "react",
         "rootDir": "src",
