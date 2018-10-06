@@ -53,17 +53,8 @@ export type ContextValue<TContext> =
     any;
 
 export type ContextValues<TContext> =
-    TContext extends {[key: string]: any} ? {[K in keyof TContext]: ContextValue<TContext[K]>} :
-    TContext extends [infer A] ? [ContextValue<A>] :
-    TContext extends [infer A, infer B] ? [ContextValue<A>, ContextValue<B>] :
-    TContext extends [infer A, infer B, infer C] ? [ContextValue<A>, ContextValue<B>, ContextValue<C>] :
-    TContext extends [infer A, infer B, infer C, infer D] ? [ContextValue<A>, ContextValue<B>, ContextValue<C>, ContextValue<D>] :
-    TContext extends [infer A, infer B, infer C, infer D, infer E] ? [ContextValue<A>, ContextValue<B>, ContextValue<C>, ContextValue<D>, ContextValue<E>] :
-    TContext extends [infer A, infer B, infer C, infer D, infer E, infer F] ? [ContextValue<A>, ContextValue<B>, ContextValue<C>, ContextValue<D>, ContextValue<E>, ContextValue<F>] :
-    TContext extends [infer A, infer B, infer C, infer D, infer E, infer F, infer G] ? [ContextValue<A>, ContextValue<B>, ContextValue<C>, ContextValue<D>, ContextValue<E>, ContextValue<F>, ContextValue<G>] :
-    TContext extends [infer A, infer B, infer C, infer D, infer E, infer F, infer G, infer H] ? [ContextValue<A>, ContextValue<B>, ContextValue<C>, ContextValue<D>, ContextValue<E>, ContextValue<F>, ContextValue<G>, ContextValue<H>] :
-    TContext extends [infer A, infer B, infer C, infer D, infer E, infer F, infer G, infer H, infer I] ? [ContextValue<A>, ContextValue<B>, ContextValue<C>, ContextValue<D>, ContextValue<E>, ContextValue<F>, ContextValue<G>, ContextValue<H>, ContextValue<I>] :
-    TContext extends [infer A, infer B, infer C, infer D, infer E, infer F, infer G, infer H, infer I, infer J] ? [ContextValue<A>, ContextValue<B>, ContextValue<C>, ContextValue<D>, ContextValue<E>, ContextValue<F>, ContextValue<G>, ContextValue<H>, ContextValue<I>, ContextValue<J>] :
+    TContext extends (unknown[] | { [key: string]: any }) ?
+    { [K in keyof TContext]: ContextValue<TContext[K]> } :
     any[];
 
 function ziparr<A, B>(a: Array<A>, b: Array<B>): Array<[A,B]> {
