@@ -1,11 +1,12 @@
 {
   "name": "join-react-context",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "join react context",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc",
+    "prepublishOnly": "npm install && npm run build"
   },
   "repository": {
     "type": "git",
