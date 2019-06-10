@@ -5,16 +5,30 @@ export interface ObjectStyleContexts {
     [key: string]: React.Context<any>;
 }
 export type Contexts = TupleStyleContexts | ObjectStyleContexts;
+export interface UseValues<T extends Contexts> {
+    (): ContextValues<T>;
+}
 
-export function joinContext<T extends Contexts>(contexts: T): React.Context<ContextValues<T>> {
+export function joinContext<T extends Contexts>(contexts: T): React.Context<ContextValues<T>> & { useValues: UseValues<T> } {
     return {
         Provider: joinProvider(contexts),
         Consumer: joinConsumer(contexts),
+        useValues:
+            Array.isArray(contexts) ?
+            () => contexts.map(context => React.useContext(context)):
+            () => {
+                const result: any = {};
+                for (const key in contexts) {
+                    const context = (contexts as ObjectStyleContexts)[key];
+                    result[key] = React.useContext(context);
+                }
+                return result;
+            },
     };
 }
 
-export function joinProvider<T extends Contexts>(contexts: T): React.Provider<ContextValues<T>> {
-    return ({ value, children }) => {
+function joinProvider<T extends Contexts>(contexts: T): React.Provider<ContextValues<T>> {
+    return (({ value, children }) => {
         const items =
             Array.isArray(contexts) ?
             ziparr<React.Context<any>, any>(contexts, value as any) :
@@ -24,25 +38,25 @@ export function joinProvider<T extends Contexts>(contexts: T): React.Provider<Co
             const { Provider } = context;
             return <Provider value={value}>{ prev || children }</Provider>;
         }, null);
-    };
+    }) as React.Provider<ContextValues<T>>;
 }
 
-export function joinConsumer<T extends Contexts>(contexts: T): React.Consumer<ContextValues<T>> {
+function joinConsumer<T extends Contexts>(contexts: T): React.Consumer<ContextValues<T>> {
     type Child = (values: any) => React.ReactNode;
     if (Array.isArray(contexts)) {
-        return ({ children }) => {
+        return (({ children }) => {
             return (contexts as TupleStyleContexts).reduce<Child>((prev, curr) => {
                 const { Consumer } = curr;
                 return (values: any) => <Consumer>{ value => (prev || children)([value, ...values]) }</Consumer>;
             }, null as any)([]) as any;
-        };
+        }) as React.Consumer<ContextValues<T>>;
     } else {
-        return ({ children }) => {
+        return (({ children }) => {
             return Object.entries<React.Context<any>>(contexts).reduce<Child>((prev, curr) => {
                 const [key, { Consumer }] = curr;
                 return (values: any) => <Consumer>{ value => (prev || children)({ ...values, [key]: value }) }</Consumer>;
             }, null as any)({}) as any;
-        };
+        }) as React.Consumer<ContextValues<T>>;
     }
 }
 
