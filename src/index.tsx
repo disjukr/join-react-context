@@ -1,4 +1,5 @@
 import * as React from 'react';
+export { default as Providers, ProvidersProps } from './Providers';
 
 export type TupleStyleContexts = React.Context<any>[];
 export interface ObjectStyleContexts {

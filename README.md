@@ -1,5 +1,5 @@
 # join-react-context
-join multiple react context into one. support tuple style & object style.
+join multiple react context into one.
 
 works perfectly with typescript.
 
@@ -7,6 +7,7 @@ works perfectly with typescript.
 ```tsx
 import * as React from 'react';
 import {
+    Providers,
     joinContext,
     joinProvider,
     joinConsumer,
@@ -15,7 +16,29 @@ import {
 const contextA = React.createContext('context a');
 const contextB = React.createContext('context b');
 
-{ // tuple style
+{ // providers array style
+    <Providers providers={[
+        <contextA.Provider value='a'/>,
+        <contextB.Provider value='b'/>,
+    ]}>
+        {children}
+    </Providers>
+    // is same as...
+    <contextA.Provider value='a'>
+        <contextB.Provider value='b'>
+            {children}
+        </contextB.Provider>
+    </contextA.Provider>
+}
+{ // providers fragment style
+    <Providers providers={<>
+        <contextA.Provider value='a'/>
+        <contextB.Provider value='b'/>
+    </>}>
+        {children}
+    </Providers>
+}
+{ // join tuple style
     type Contexts = [ typeof contextA, typeof contextB ];
     const { Provider, Consumer } = joinContext<Contexts>([ contextA, contextB ]);
 
@@ -31,7 +54,7 @@ const contextB = React.createContext('context b');
         </Consumer>
     );
 }
-{ // object style
+{ // join object style
     const { Provider, Consumer } = joinContext({ a: contextA, b: contextB });
 
     const App = () => (
@@ -46,7 +69,7 @@ const contextB = React.createContext('context b');
         </Consumer>
     );
 }
-{ // mixed style (vice versa)
+{ // join mixed style (vice versa)
     type Contexts = [ typeof contextA, typeof contextB ];
     const Provider = joinProvider<Contexts>([ contextA, contextB ]);
     const Consumer = joinConsumer({ a: contextA, b: contextB });

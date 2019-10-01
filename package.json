@@ -1,6 +1,6 @@
 {
   "name": "join-react-context",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "join react context",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -27,8 +27,8 @@
     "react": "^16.8.0"
   },
   "devDependencies": {
-    "@types/react": "^16.8.19",
-    "rimraf": "^2.6.3",
-    "typescript": "^3.5.1"
+    "@types/react": "^16.9.4",
+    "rimraf": "^2.7.1",
+    "typescript": "^3.6.3"
   }
 }
